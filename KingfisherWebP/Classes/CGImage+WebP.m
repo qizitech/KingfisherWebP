@@ -259,7 +259,7 @@ CGImageRef WebPImageCreateWithData(CFDataRef webpData) {
     void *bufCopy = malloc(bufSize);
     if (!bufCopy) {
         WebPAnimDecoderDelete(dec);
-        return NULL
+        return NULL;
     }
     memcpy(bufCopy, buf, bufSize);
     WebPAnimDecoderDelete(dec);
@@ -364,7 +364,7 @@ CFDictionaryRef WebPAnimatedImageInfoCreateWithData(CFDataRef webpData) {
         void *bufCopy = malloc(bufSize);
         if (!bufCopy) {
             WebPAnimDecoderDelete(dec);
-            return NULL
+            return NULL;
         }
         memcpy(bufCopy, buf, bufSize);
         
