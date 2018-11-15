@@ -184,9 +184,6 @@ static BOOL WebPCGImageDecodeToBitmapBufferWith32BitFormat(CGImageRef srcImage, 
     if (length == 0 || !data) goto fail;
     
     dest->data = malloc(length);
-    if (!dest->data) {
-        goto fail;
-    }
     dest->width = width;
     dest->height = height;
     dest->rowBytes = bytesPerRow;
