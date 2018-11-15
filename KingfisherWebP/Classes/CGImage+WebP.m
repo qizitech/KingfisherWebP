@@ -184,6 +184,9 @@ static BOOL WebPCGImageDecodeToBitmapBufferWith32BitFormat(CGImageRef srcImage, 
     if (length == 0 || !data) goto fail;
     
     dest->data = malloc(length);
+    if (!dest->data) {
+        goto fail;
+    }
     dest->width = width;
     dest->height = height;
     dest->rowBytes = bytesPerRow;
@@ -213,7 +216,6 @@ fail:
     if (context) CFRelease(context);
     if (dest->data) free(dest->data);
     dest->data = NULL;
-    return NO;
     return NO;
 }
 
@@ -258,6 +260,10 @@ CGImageRef WebPImageCreateWithData(CFDataRef webpData) {
     
     const size_t bufSize = anim_info.canvas_width * 4 * anim_info.canvas_height;
     void *bufCopy = malloc(bufSize);
+    if (!bufCopy) {
+        WebPAnimDecoderDelete(dec);
+        return NULL
+    }
     memcpy(bufCopy, buf, bufSize);
     WebPAnimDecoderDelete(dec);
         
@@ -359,6 +365,10 @@ CFDictionaryRef WebPAnimatedImageInfoCreateWithData(CFDataRef webpData) {
         
         const size_t bufSize = anim_info.canvas_width * 4 * anim_info.canvas_height;
         void *bufCopy = malloc(bufSize);
+        if (!bufCopy) {
+            WebPAnimDecoderDelete(dec);
+            return NULL
+        }
         memcpy(bufCopy, buf, bufSize);
         
         CGDataProviderRef provider = CGDataProviderCreateWithData(bufCopy, bufCopy, bufSize, WebPFreeInfoReleaseDataCallback);
