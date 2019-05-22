@@ -7,7 +7,7 @@
 //
 
 #import "CGImage+WebP.h"
-
+#import <Foundation/Foundation.h>
 #import <Accelerate/Accelerate.h>
 #import "webp/decode.h"
 #import "webp/encode.h"
