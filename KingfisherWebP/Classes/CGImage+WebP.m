@@ -9,10 +9,10 @@
 #import "CGImage+WebP.h"
 #import <Foundation/Foundation.h>
 #import <Accelerate/Accelerate.h>
-#import "webp/decode.h"
-#import "webp/encode.h"
-#import "webp/demux.h"
-#import "webp/mux.h"
+#import <WebP/decode.h>
+#import <WebP/encode.h>
+#import <WebP/demux.h>
+#import <WebP/mux.h>
 
 #pragma mark - Helper Functions
 
