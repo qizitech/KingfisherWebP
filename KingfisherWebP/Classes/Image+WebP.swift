@@ -10,7 +10,7 @@ import Kingfisher
 import CoreGraphics
 
 // MARK: - Image Representation
-extension KingfisherWrapper where Base: Image {
+extension KingfisherWrapper where Base: KFCrossPlatformImage {
     public func webpRepresentation() -> Data? {
         if let result = animatedWebPRepresentation() {
             return result
@@ -38,8 +38,8 @@ extension KingfisherWrapper where Base: Image {
 }
 
 // MARK: - Create image from WebP data
-extension KingfisherWrapper where Base: Image {
-    static func image(webpData: Data, scale: CGFloat, onlyFirstFrame: Bool) -> Image? {
+extension KingfisherWrapper where Base: KFCrossPlatformImage {
+    static func image(webpData: Data, scale: CGFloat, onlyFirstFrame: Bool) -> KFCrossPlatformImage? {
         let frameCount = WebPImageFrameCountGetFromData(webpData as CFData)
         if (frameCount == 0) {
             return nil
@@ -49,7 +49,7 @@ extension KingfisherWrapper where Base: Image {
             guard let cgImage = WebPImageCreateWithData(webpData as CFData) else {
                 return nil
             }
-            return Image(cgImage: cgImage, scale: scale, orientation: .up)
+            return KFCrossPlatformImage(cgImage: cgImage, scale: scale, orientation: .up)
         }
         
         // MARK: Animated images
@@ -59,10 +59,10 @@ extension KingfisherWrapper where Base: Image {
         guard let cgFrames = animationInfo[kWebPAnimatedImageFrames] as? [CGImage] else {
             return nil
         }
-        let uiFrames = cgFrames.map { Image(cgImage: $0, scale: scale, orientation: .up) }
+        let uiFrames = cgFrames.map { KFCrossPlatformImage(cgImage: $0, scale: scale, orientation: .up) }
         
         let duration = (animationInfo[kWebPAnimatedImageDuration] as? NSNumber).flatMap { $0.doubleValue as TimeInterval } ?? 0.1 * TimeInterval(frameCount)
-        return Image.animatedImage(with: uiFrames, duration: duration)
+        return KFCrossPlatformImage.animatedImage(with: uiFrames, duration: duration)
     }
 }
 
